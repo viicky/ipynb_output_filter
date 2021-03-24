@@ -20,9 +20,17 @@ except ImportError:
         # New IPython
         from nbformat import reads, write
     except ImportError:
-        # Old IPython
-        from IPython.nbformat.current import reads, write
-        version = 'json'
+        try:
+            # Old IPython
+            from IPython.nbformat.current import reads, write
+            version = 'json'
+        except ImportError:
+            print(
+                "/!\\Either jupyter, ipython or nbformat in missing. notebook not cleaned/!\\",
+                file=sys.stderr,
+                flush=True
+            )
+            exit(0)
 
 to_parse = sys.stdin.read()
 
