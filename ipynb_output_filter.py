@@ -12,6 +12,9 @@ except ValueError:
 
 version = None
 
+to_parse = sys.stdin.read()
+
+
 try:
     # Jupyter
     from jupyter_nbformat import reads, write
@@ -26,13 +29,13 @@ except ImportError:
             version = 'json'
         except ImportError:
             print(
-                "/!\\Either jupyter, ipython or nbformat in missing. notebook not cleaned/!\\",
+                "/!\\Either jupyter, ipython or nbformat is missing. notebook not cleaned/!\\",
                 file=sys.stderr,
                 flush=True
             )
+            print(to_parse, file=sys.stdout, flush=True, end="")
             exit(0)
 
-to_parse = sys.stdin.read()
 
 if not version:
     import json
